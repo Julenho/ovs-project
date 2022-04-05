@@ -14,7 +14,7 @@ cp /etc/network/interfaces /etc/network/interfaces.bkp
 ifconfig <if_name> 0
 
 # Set a static IP address and default gateway
-ip address <IP/CIDR> dev <bridge_name>
+ip address add <IP/CIDR> dev <bridge_name>
 ip route add default via <gateway_IP> dev <bridge_name>
 
 # Create a TAP interfaces to connect on the VM
