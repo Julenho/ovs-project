@@ -1,0 +1,30 @@
+# First of all create a bridge
+ovs-vsctl add-br <bridge_name>
+
+# Enable the bridge interface
+ifconfig <bridge_name> up
+
+# Attach the bridge interface to the fisical interface
+ovs-vsctl add-port <bridge_name> <if_name>
+
+# Backup the network configuration file (for guarantee)
+cp /etc/network/interfaces /etc/network/interfaces.bkp
+
+# Remove the IP address of fisical interface
+ifconfig <if_name> 0
+
+# Set a static IP address and default gateway
+ip address <IP/CIDR> dev <bridge_name>
+ip route add default via <gateway_IP> dev <bridge_name>
+
+# Create a TAP interfaces to connect on the VM
+ip tuntap add mode tap tap0
+ip tuntap add mode tap tap1
+
+# turn them on
+ifconfig tap0 up
+ifconfig tap1 up
+
+# Add a TAP interface on the bridge 
+ovs-vsctl add-port <bridge_name> tap0
+ovs-vsctl add-port <bridge_name> tap1
