@@ -1,4 +1,13 @@
-# First of all create a bridge
+#On VMC install the sFlowTrend package available on https://inmon.com/products/sFlowTrend.php
+
+cd /tmp
+curl -O https://inmon.com/products/sFlowTrend/downloads/sFlowTrend-linux-7_2.deb
+dpkg -i sFlowTrend-linux-7_2.deb
+
+# Connect to the Web service trough your browser
+http://[hostname]:8087
+
+# On the host, configure the OVS bridge
 ovs-vsctl add-br <bridge_name>
 
 # Enable the bridge interface
