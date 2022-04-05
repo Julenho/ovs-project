@@ -30,6 +30,7 @@ ip route add default via <gateway_IP> dev <bridge_name>
 ip tuntap add mode tap tap0
 ip tuntap add mode tap tap1
 
+
 # turn them on
 ifconfig tap0 up
 ifconfig tap1 up
@@ -37,3 +38,20 @@ ifconfig tap1 up
 # Add a TAP interface on the bridge 
 ovs-vsctl add-port <bridge_name> tap0
 ovs-vsctl add-port <bridge_name> tap1
+
+
+COLLECTOR_IP=<VMC_IP>
+COLLECTOR_PORT=6343
+AGENT_IP=enp4s0
+HEADER_BYTES=128
+SAMPLING_N=64
+POLLING_SECS=10
+
+
+ovs-vsctl -- --id=@sflow create sflow agent=${AGENT_IP} \
+    target="\"${COLLECTOR_IP}:${COLLECTOR_PORT}\"" header=${HEADER_BYTES} \
+    sampling=${SAMPLING_N} polling=${POLLING_SECS} \
+      -- set bridge <brifge_name> sflow=@sflow
+
+
+
