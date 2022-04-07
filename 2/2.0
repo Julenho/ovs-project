@@ -2,6 +2,9 @@
 
 cd /tmp
 curl -O https://inmon.com/products/sFlowTrend/downloads/sFlowTrend-linux-7_2.deb
+
+apt update
+apt install openjdk-17-jre
 dpkg -i sFlowTrend-linux-7_2.deb
 
 # Connect to the Web service trough your browser
