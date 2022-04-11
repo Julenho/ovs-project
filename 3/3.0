@@ -1,1 +1,28 @@
-#
+# On the raspberry starts a container 
+/etc/init.d/docker start
+docker pull julenho/project-ovs-sflow:2.0
+docker container run -ti -p 6343:6343/udp -p 8087:8087 <container_id>
+
+# On your container 
+
+# On the proxmox server install the OVS
+apt install openvswitch-switch
+
+# Connect to the web interface of proxmox and create a OVS bridge
+# Connect the VMs on the OVS bridge
+# On the proxmox server CLI type the follow configuration values 
+
+COLLECTOR_IP=<IP_rasp>
+COLLECTOR_PORT=6343
+AGENT_IP=<iface>
+HEADER_BYTES=128
+SAMPLING_N=64
+POLLING_SECS=10
+
+# To send Sflow packages to container, type the follow command, replacing <bridge_name> for your proxmox OVS bridge name
+ovs-vsctl -- --id=@sflow create sflow agent=${AGENT_IP} \
+    target="\"${COLLECTOR_IP}:${COLLECTOR_PORT}\"" header=${HEADER_BYTES} \
+    sampling=${SAMPLING_N} polling=${POLLING_SECS} \
+      -- set bridge <bridge_name> sflow=@sflow
+
+
