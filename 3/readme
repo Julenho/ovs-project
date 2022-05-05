@@ -1,0 +1,6 @@
+This part of project is the final part. The material used on this part is:
+
+  -Dell PowerEdge R310 using Proxmox with Open vSwitch to simulate a IoT network.
+  -Raspberry Pi3 model B, running sFlow Trend service on a Docker container.
+ 
+You can use the environment of the part 1 of the project to simulate a network, but you need to use another host for the monitoring.
